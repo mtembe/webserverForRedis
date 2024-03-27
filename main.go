@@ -21,6 +21,7 @@ func main() {
 
 	app.Get("/:value", func(c *fiber.Ctx) error {
 		fmt.Println(c.Params("value"))
+
 		res, err := client.Get(context.Background(), (c.Params("value"))).Result()
 		if err != nil {
 			fmt.Println("Error getting value in Redis", ":", err)
@@ -28,7 +29,7 @@ func main() {
 			fmt.Println("Success getting value in Redis")
 		}
 		fmt.Println(res)
-		return c.SendString(c.Params(res))
+		return c.SendString(res)
 
 	})
 
