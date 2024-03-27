@@ -28,7 +28,7 @@ func main() {
 			fmt.Println("Success getting value in Redis")
 		}
 		fmt.Println(res)
-		return c.SendString(c.Params("value"))
+		return c.SendString(c.Params(res))
 
 	})
 
