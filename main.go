@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"AutobahnApiGo/webserver/api"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/redis/go-redis/v9"
 )
@@ -25,7 +27,13 @@ func main() {
 
 		res, err := client.Get(context.Background(), (c.Params("value"))).Result()
 		if err != nil {
-			return c.SendString(fmt.Sprint(err))
+			api.Bundesapi(c.Params("value"))
+			res2, err := client.Get(context.Background(), (c.Params("value"))).Result()
+			if err != nil {
+				return c.SendString(fmt.Sprint(err))
+			}
+			return c.SendString(res2)
+
 		} else {
 			fmt.Println("Success getting value in Redis")
 
