@@ -9,9 +9,10 @@ import (
 )
 
 func main() {
+
 	client := redis.NewClient(&redis.Options{
-		Addr:     "my-release-redis-master.default.svc.cluster.local:6379",
-		Password: "13371337",
+		Addr:     "localhost:6379",
+		Password: "",
 		DB:       0,
 	})
 
@@ -24,10 +25,12 @@ func main() {
 
 		res, err := client.Get(context.Background(), (c.Params("value"))).Result()
 		if err != nil {
-			fmt.Println("Error getting value in Redis", ":", err)
+			return c.SendString(fmt.Sprint(err))
 		} else {
 			fmt.Println("Success getting value in Redis")
+
 		}
+
 		fmt.Println(res)
 		return c.SendString(res)
 
